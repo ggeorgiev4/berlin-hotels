@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { BookingFormEventModel } from './booking-form/booking-form.event-model';
 import { HotelCardEventModel } from './hotel-card/hotel-card.event-model';
 import { HotelViewModel } from './models/hotel.model';
 import { BackendService } from './services/backend.service';
@@ -77,7 +78,7 @@ export class AppComponent implements OnDestroy {
         this.bookingService.handle(event);
     }
 
-    handleFormAction(event: any): void {
+    handleFormAction(event: BookingFormEventModel): void {
         this.bookingService.handle(event);
     }
 
