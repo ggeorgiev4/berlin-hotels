@@ -1,27 +1,28 @@
 <app-header></app-header>
 
 <div class="content">
-  <div class="map-wrapper" *ngIf="hotels | async; let hotels">
-    <google-map width="100%" height="{{mapHeight}}" [options]="options">
-        <map-marker
-          #markerElement
-          *ngFor="let marker of hotels"
-          [position]="marker.position"
-          [title]="marker.title"
-          [options]="getMarkerOptions(marker)"
-          (mapClick)="hotelClick(marker.id, marker.title, marker.position)"
-        >
-        </map-marker>
+    <div class="map-wrapper" *ngIf="hotels | async; let hotels">
+        <google-map width="100%" height="{{mapHeight}}" [options]="options">
+            <map-marker
+            #markerElement
+            *ngFor="let hotel of hotels"
+            [position]="hotel.position"
+            [title]="hotel.title"
+            [options]="getMarkerOptions(hotel)"
+            (mapClick)="onHotelClick(hotel)"
+            >
+            </map-marker>
 
-        <map-info-window>{{ infoContent }}</map-info-window>
-    </google-map>
+            <map-info-window>{{ infoContent }}</map-info-window>
+        </google-map>
 
-    <div class="cards-wrapper" #hotelCardsWrapper>
-      <app-hotel-card *ngFor="let hotel of hotels"
-        #hotelCard
-        [hotel]="hotel"
-        (click)="hotelClick(hotel.id, hotel.title, hotel.position)"
-        [ngClass]="{'active': activeHotel === hotel.id}"></app-hotel-card>
+        <div class="cards-wrapper" #hotelCardsWrapper>
+        <app-hotel-card *ngFor="let hotel of hotels"
+            #hotelCard
+            [hotel]="hotel"
+            (click)="onHotelClick(hotel)"
+            (action)="handleCardAction($event)"
+            [ngClass]="{'active': activeHotel === hotel.id}"></app-hotel-card>
+        </div>
     </div>
-  </div>
 </div>
