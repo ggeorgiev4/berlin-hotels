@@ -1,9 +1,10 @@
 :host {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 25;
+    width: 100vw;
+    height: 100vh;
 }
 
 .booking-form {
@@ -13,9 +14,12 @@
     justify-content: space-evenly;
     gap: 15px;
     padding: 15px;
-    position: relative;
     width: 300px;
     height: 100vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
 
     .form-field {
         width: 100%;
@@ -62,5 +66,25 @@
                 background-color: #424242;
             }
         }
+    }
+}
+
+@media screen and (min-width: 800px) {
+    :host {
+        &::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.3);
+        }
+    }
+    .booking-form {
+        height: 400px;
+        width: 500px;
     }
 }
