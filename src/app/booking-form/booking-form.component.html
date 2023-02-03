@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="onClick(BookingFormSubmitEventType)" class="booking-form">
+    <div class="form-field">
+        <label class="form-label">Email</label>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors['required']">Email is required</div>
+            <div *ngIf="f.email.errors['email']">Invalid email address</div>
+        </div>
+    </div>
+    <div class="form-field">
+        <label class="form-label">Name</label>
+        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors['required']">Name is required</div>
+        </div>
+    </div>
+    <div class="form-field">
+        <label class="form-label">Phone number</label>
+        <input type="text" formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+            <div *ngIf="f.phoneNumber.errors['required']">Phone number is required</div>
+            <div *ngIf="f.phoneNumber.errors['minlength']">Phone number must be at least 8 numbers</div>
+            <div *ngIf="f.phoneNumber.errors['pattern']">Phone number can include only numbers</div>
+        </div>
+    </div>
+    <div class="form-field">
+        <label class="form-label">Hotel</label>
+        <input type="text" formControlName="hotel" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hotel.errors }" />
+        <div *ngIf="submitted && f.hotel.errors" class="invalid-feedback">
+            <div *ngIf="f.hotel.errors['required']">Hotel name is required</div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn submit">Book</button>
+        <button class="btn cancel" type="reset" (click)="onClick(BookingFormCloseEventType)">Cancel</button>
+    </div>
+</form>

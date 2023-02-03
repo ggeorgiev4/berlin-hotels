@@ -1,6 +1,5 @@
 <div class="card" *ngIf="hotel">
     <div class="image-and-info">
-        <!-- TODO Add favorite button ?-->
         <img src="{{hotel.image}}">
 
         <div class="info">
@@ -14,5 +13,5 @@
         </div>
     </div>
 
-    <button class="book-now" (click)="onClick(HotelCardBookEventType)">Book now</button>
+    <button class="btn book-now" (click)="onClick(HotelCardBookEventType)">Book now</button>
 </div>

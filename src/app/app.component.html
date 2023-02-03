@@ -17,12 +17,18 @@
         </google-map>
 
         <div class="cards-wrapper" #hotelCardsWrapper>
-        <app-hotel-card *ngFor="let hotel of hotels"
-            #hotelCard
-            [hotel]="hotel"
-            (click)="onHotelClick(hotel)"
-            (action)="handleCardAction($event)"
-            [ngClass]="{'active': activeHotel === hotel.id}"></app-hotel-card>
+            <app-hotel-card *ngFor="let hotel of hotels"
+                #hotelCard
+                [hotel]="hotel"
+                (click)="onHotelClick(hotel)"
+                (action)="handleCardAction($event)"
+                [ngClass]="{'active': activeHotel.id === hotel.id}">
+            </app-hotel-card>
         </div>
     </div>
 </div>
+
+<app-booking-form *ngIf="showForm | async"
+    [hotel]="activeHotel.title"
+    (action)="handleFormAction($event)">
+</app-booking-form>

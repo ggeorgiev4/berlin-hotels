@@ -1,6 +1,6 @@
-import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { HotelCardEventModel } from './hotel-card/hotel-card.event-model';
 import { HotelViewModel } from './models/hotel.model';
 import { BackendService } from './services/backend.service';
@@ -11,31 +11,36 @@ import { BookingService } from './services/booking.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
     @ViewChild(MapInfoWindow, { static: false }) private readonly info!: MapInfoWindow;
     @ViewChildren('hotelCard', { read: ElementRef }) private readonly hotelCards: QueryList<ElementRef> | undefined;
     @ViewChildren(MapMarker) private readonly markers: QueryList<MapMarker> | undefined;
 
     public options: google.maps.MapOptions = { zoom: 15 };
-    public activeHotel!: number;
+    public activeHotel!: HotelViewModel;
     public infoContent!: string;
     public hotels: Observable<Array<HotelViewModel>>;
+
+    private readonly destroy = new Subject<void>();
+    public showForm: Observable<boolean> = this.bookingService.showBookingForm.pipe(
+        takeUntil(this.destroy)
+    )
 
     constructor(private readonly backendService: BackendService,
                 private readonly bookingService: BookingService) {
         this.hotels = this.backendService.hotels.pipe(
             tap((hotels) => {
-                this.activeHotel = hotels[0].id;
+                this.activeHotel = hotels[0];
                 this.options.center = hotels[0].position;
             })
         );
     }
 
     onHotelClick(hotel: HotelViewModel): void {
-        if (hotel.id === this.activeHotel)
+        if (hotel.id === this.activeHotel.id)
             return;
         
-        this.activeHotel = hotel.id;
+        this.activeHotel = hotel;
         this.infoContent = hotel.title;
         this.options.center = hotel.position;
         
@@ -51,16 +56,16 @@ export class AppComponent {
         if (!this.hotelCards)
             return;
 
-        const activeHotelCard = this.hotelCards.toArray()[this.activeHotel];
+        const activeHotelCard = this.hotelCards.toArray()[this.activeHotel.id];
         if (!activeHotelCard)
             return;
 
-        this.hotelCards.toArray()[this.activeHotel].nativeElement.scrollIntoView({behavior: 'smooth', inline: 'center'});
+        this.hotelCards.toArray()[this.activeHotel.id].nativeElement.scrollIntoView({behavior: 'smooth', inline: 'center'});
     }
 
     getMarkerOptions(hotel: HotelViewModel): google.maps.MarkerOptions {
         return {
-            icon: hotel.id === this.activeHotel ? '../assets/home-icon-active.svg' : '../assets/home-icon.svg'
+            icon: hotel.id === this.activeHotel.id ? '../assets/home-icon-active.svg' : '../assets/home-icon.svg'
         }
     }
 
@@ -70,5 +75,13 @@ export class AppComponent {
 
     handleCardAction(event: HotelCardEventModel): void {
         this.bookingService.handle(event);
+    }
+
+    handleFormAction(event: any): void {
+        this.bookingService.handle(event);
+    }
+
+    ngOnDestroy(): void {
+        this.destroy.next();
     }
 }
