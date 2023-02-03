@@ -56,12 +56,13 @@ export class AppComponent implements OnDestroy {
     private scrollActiveHotelCardIntoView(): void {
         if (!this.hotelCards)
             return;
-
+            
         const activeHotelCard = this.hotelCards.toArray()[this.activeHotel.id];
+
         if (!activeHotelCard)
             return;
 
-        this.hotelCards.toArray()[this.activeHotel.id].nativeElement.scrollIntoView({behavior: 'smooth', inline: 'center'});
+        activeHotelCard.nativeElement.scrollIntoView({behavior: 'smooth', inline: 'center'});
     }
 
     getMarkerOptions(hotel: HotelViewModel): google.maps.MarkerOptions {
