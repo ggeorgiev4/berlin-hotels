@@ -1,0 +1,45 @@
+:host {
+    overflow: hidden;
+    position: relative;
+
+    .content {
+        overflow: hidden;
+        width: 100%;
+        height: calc(100% - 70px);
+        margin: auto;
+        position: relative;
+
+        .map-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+            .cards-wrapper {
+                position: absolute;
+                bottom: 3px;
+                display: inline-flex;
+                align-items: flex-end;
+                gap: 15px;
+                white-space: nowrap;
+                width: 100%;
+                overflow-x: auto;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+
+                scroll-snap-type: x mandatory;
+            }
+        }
+    }
+}
+
+google-map {
+    ::ng-deep {
+        .gm-ui-hover-effect {
+            outline: none;
+        }
+    }
+}

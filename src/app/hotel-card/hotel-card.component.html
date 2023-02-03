@@ -1,0 +1,17 @@
+<div class="card" *ngIf="hotel">
+    <div class="image-and-info">
+        <img src="https://picsum.photos/150/130?random&t={{hotel.distance}}">
+
+        <div class="info">
+            <div class="title">{{hotel.title}}</div>
+            <div class="distance">{{hotel.distance}}m from city center</div>
+
+            <div class="price-and-text">
+                <div class="price">&euro; {{hotel.price}}</div>
+                <div class="text">Designs may vary</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="book-now">Book now</button>
+</div>

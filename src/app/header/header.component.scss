@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #EBEAE6;
+    position: sticky;
+    top: 0;
+    height: 70px;
+
+    .logo, .menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,92 @@
+:host {
+    cursor: pointer;
+    scroll-snap-stop: normal;
+    scroll-snap-align: center;
+    display: flex;
+
+    &.active {
+        border: 1px solid red;
+    }
+    &:first-of-type {
+        margin-left: 5px;
+    }
+    &:last-of-type {
+        margin-right: 5px;
+    }
+}
+
+.card {
+    background: #fff;
+    padding: 10px;
+    width: 325px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1 1 0px;
+
+    .image-and-info {
+        display: inline-flex;
+        gap: 10px;
+        width: 100%;
+        flex: 1;
+        white-space: break-spaces;
+
+        .title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .distance {
+            color: #868686;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 5px;
+
+            .price-and-text {
+                margin-top: auto;
+
+                .price {
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+
+                .text {
+                    color: #ccc;
+                    font-size: 13px;
+                }
+            }
+        }
+
+        img {
+            height: 130px;
+            width: 50%;
+        }
+    }
+
+    .book-now {
+        width: 100%;
+        padding: 10px 30px;
+        background-color: #ffa600;
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #8d5c00;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card {
+        width: calc(100vw - 80px);
+    }
+}
